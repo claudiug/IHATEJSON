@@ -10,9 +10,9 @@ import java.util.Iterator;
 import java.util.logging.Logger;
 
 public class Main {
-    static JSONObject array;
+    static JSONObject resultObj;
 
-    public static JSONObject getJSON(String url, int timeout) {
+    public static JSONObject getJSON(String url, int timeout ) {
         try {
             URL u = new URL(url);
             HttpURLConnection c = (HttpURLConnection) u.openConnection();
@@ -37,7 +37,7 @@ public class Main {
 
                     }
                     br.close();
-                array = new JSONObject(sb.toString());
+                    resultObj = new JSONObject(sb.toString());
 
             }
 
@@ -46,7 +46,7 @@ public class Main {
         } catch (IOException ex) {
 
         }
-        return array;
+        return resultObj;
     }
 
     public static void main(String[] args) throws IOException {
