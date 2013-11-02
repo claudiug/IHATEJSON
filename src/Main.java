@@ -59,6 +59,8 @@ public class Main {
         System.out.println(result.getClass());
         for (int i = 0; i < result.length(); i++) {
             System.out.println(result.getJSONObject(i).getString("carName"));
+            System.out.println("LAT " + result.getJSONObject(i).getJSONObject("position").get("latitude"));
+            System.out.println("LGN " + result.getJSONObject(i).getJSONObject("position").get("longitude"));
         }
 
 
