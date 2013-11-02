@@ -6,7 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Main {
@@ -50,19 +52,33 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+
+        List<Car> cars = new ArrayList<Car>();
         String site = "https://www.drive-now.com/php/metropolis/json.vehicle_filter?cit=6099";
         JSONObject object = getJSON(site, 2000);
         JSONObject rec = (JSONObject) object.get("rec");
         System.out.println(rec.has("vehicles"));
         JSONObject jsonObject = rec.getJSONObject("vehicles");
         JSONArray result = jsonObject.getJSONArray("vehicles");
-        System.out.println(result.getClass());
         for (int i = 0; i < result.length(); i++) {
-            System.out.println(result.getJSONObject(i).getString("carName"));
-            System.out.println("LAT " + result.getJSONObject(i).getJSONObject("position").get("latitude"));
-            System.out.println("LGN " + result.getJSONObject(i).getJSONObject("position").get("longitude"));
+
+            cars.add(
+                    new Car(
+                            result.getJSONObject(i).getString("carName"),
+                            result.getJSONObject(i).getJSONObject("position").getString("address"),
+                            Float.parseFloat(result.getJSONObject(i).getJSONObject("position").getString("latitude")),
+                            Float.parseFloat(result.getJSONObject(i).getJSONObject("position").getString("longitude"))
+                    ));
         }
 
+
+        for (Car car : cars) {
+            System.out.println(car);
+        }
+
+        System.out.println(cars.size());
+
+        System.out.println(Float.parseFloat("52.506052777778"));
 
     }
 }
